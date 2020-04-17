@@ -19,7 +19,7 @@ public class FFMPEG {
      */
     public FFMPEG(Arguments arguments) throws IOException {
         List<String> command = new ArrayList<>();
-        Collections.addAll(command, "ffmpeg", "-hide_banner", "-re", "-f", "s16be", "-ac", "2",
+        Collections.addAll(command, "ffmpeg", "-hide_banner", "-f", "s16be", "-ac", "2",
                 "-ar", "48000", "-i", "pipe:0", "-ar", String.valueOf(arguments.sampleRate),
                 "-ac", String.valueOf(arguments.compressionLevel), "-c:a", "libmp3lame", "-f", "mp3");
 
