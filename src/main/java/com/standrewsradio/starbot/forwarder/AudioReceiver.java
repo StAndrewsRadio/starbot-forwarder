@@ -31,6 +31,7 @@ public class AudioReceiver implements AudioReceiveHandler {
             ffmpeg.giveAudio(combinedAudio.getAudioData(1f));
         } catch (IOException e) {
             logger.error("An error occurred whilst piping data to ffmpeg.", e);
+            Runtime.getRuntime().exit(-1);
         }
     }
 }
