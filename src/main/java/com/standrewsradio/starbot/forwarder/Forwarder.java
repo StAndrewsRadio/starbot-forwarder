@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
-import net.dv8tion.jda.api.utils.Compression;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.LoggerFactory;
 
@@ -34,11 +33,8 @@ public class Forwarder {
         this.discord = new JDABuilder()
                 .setToken(arguments.token)
                 .setDisabledCacheFlags(EnumSet.allOf(CacheFlag.class))
-                .setBulkDeleteSplittingEnabled(false)
-                .setCompression(Compression.NONE)
                 .setChunkingFilter(ChunkingFilter.NONE)
                 .setGuildSubscriptionsEnabled(false)
-                .addEventListeners(this)
                 .setActivity(Activity.listening("to you."))
                 .build();
 
