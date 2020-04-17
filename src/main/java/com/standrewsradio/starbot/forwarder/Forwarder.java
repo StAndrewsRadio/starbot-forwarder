@@ -32,7 +32,7 @@ public class Forwarder {
         this.arguments = arguments;
         this.discord = new JDABuilder()
                 .setToken(arguments.token)
-                .setDisabledCacheFlags(EnumSet.allOf(CacheFlag.class))
+                .setDisabledCacheFlags(EnumSet.of(CacheFlag.EMOTE, CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS))
                 .setChunkingFilter(ChunkingFilter.NONE)
                 .setGuildSubscriptionsEnabled(false)
                 .setActivity(Activity.listening("to you."))
@@ -50,6 +50,7 @@ public class Forwarder {
         }
 
         AudioManager audioManager = channel.getGuild().getAudioManager();
+        audioManager.setSelfMuted(true);
         audioManager.setReceivingHandler(new AudioReceiver(arguments));
         audioManager.openAudioConnection(channel);
 
