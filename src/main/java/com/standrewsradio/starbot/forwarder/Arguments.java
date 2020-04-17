@@ -1,8 +1,11 @@
 package com.standrewsradio.starbot.forwarder;
 
+import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+
+import java.nio.file.Path;
 
 /**
  * Command line arguments for the program.
@@ -29,15 +32,26 @@ public class Arguments {
             " audio channel.")
     boolean singleChannel;
 
-    @Option(names = {"-r", "--sample-rate"}, description = "The sample rate to use.")
+    @Option(names = {"-r", "--sample-rate"}, description = "The sample rate to use for the output.  " +
+            "Default value: ${DEFAULT-VALUE}.")
     int sampleRate = 48000;
 
-    @Option(names = {"-x", "--compression-level"}, description = "The level of audio compression to use.")
+    @Option(names = {"-x", "--compression-level"}, description = "The level of audio compression to use for" +
+            " the output. Default value: ${DEFAULT-VALUE}.")
     int compressionLevel = 0;
 
     @Option(names = {"-d", "--redirect-ffmpeg-output"}, description = "If ffmpeg's stdout should be printed.")
     boolean redirectFfmpegOutput;
 
-    @Parameters(index = "0", description = "The full Icecast URL to send the audio to.")
-    String icecastUrl;
+    @ArgGroup(heading = "Output Location", multiplicity = "1")
+    OutputGroup outputGroup;
+
+    public static class OutputGroup {
+
+        @Parameters(index = "0", description = "The full Icecast URL to send the audio to.")
+        String icecastUrl;
+
+        @Option(names = {"-f", "--file-output"}, description = "The file to output the audio to.")
+        Path path;
+    }
 }
