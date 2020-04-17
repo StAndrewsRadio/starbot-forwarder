@@ -1,6 +1,7 @@
 package com.standrewsradio.starbot.forwarder;
 
 import ch.qos.logback.classic.Logger;
+import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -36,6 +37,7 @@ public class Forwarder {
                 .setChunkingFilter(ChunkingFilter.NONE)
                 .setGuildSubscriptionsEnabled(false)
                 .setActivity(Activity.listening("to you."))
+                .setAudioSendFactory(new NativeAudioSendFactory(arguments.bufferDuration))
                 .build();
 
         // wait until we're ready
