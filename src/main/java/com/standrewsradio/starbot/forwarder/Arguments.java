@@ -47,6 +47,10 @@ public class Arguments {
             "Default value: ${DEFAULT-VALUE}.")
     int bufferDuration = 400;
 
+    @Option(names = {"-l", "--listening-to"}, description = "The activity string following \"Listening to \". " +
+            "Default value: ${DEFAULT-VALUE}.")
+    String listeningTo = "you.";
+
     @ArgGroup(heading = "Output Location", multiplicity = "1")
     OutputGroup outputGroup;
 

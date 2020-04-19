@@ -36,7 +36,7 @@ public class Forwarder {
                 .setDisabledCacheFlags(EnumSet.of(CacheFlag.EMOTE, CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS))
                 .setChunkingFilter(ChunkingFilter.NONE)
                 .setGuildSubscriptionsEnabled(false)
-                .setActivity(Activity.listening("to you."))
+                .setActivity(Activity.listening(arguments.listeningTo))
                 .setAudioSendFactory(new NativeAudioSendFactory(arguments.bufferDuration))
                 .build();
 
