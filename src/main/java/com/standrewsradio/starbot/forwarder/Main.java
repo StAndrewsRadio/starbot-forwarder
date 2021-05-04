@@ -7,6 +7,7 @@ import picocli.CommandLine;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
+import picocli.CommandLine.ParameterException;
 
 public class Main {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(Main.class),
@@ -16,7 +17,15 @@ public class Main {
         // parse command line arguments
         Arguments arguments = new Arguments();
         CommandLine commandLine = new CommandLine(arguments);
-        commandLine.parseArgs(args);
+
+        try {
+            commandLine.parseArgs(args);
+        } catch (ParameterException e) {
+            logger.error("An error occurred whilst parsing the command line arguments. " + e.getLocalizedMessage());
+            System.out.println();
+            commandLine.usage(System.out);
+            return;
+        }
 
         // set the logger level
         if (arguments.verbosity != null) {

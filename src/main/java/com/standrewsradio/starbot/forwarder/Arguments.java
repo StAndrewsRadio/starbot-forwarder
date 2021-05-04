@@ -10,7 +10,9 @@ import java.nio.file.Path;
 /**
  * Command line arguments for the program.
  */
-@Command(versionProvider = com.standrewsradio.starbot.forwarder.VersionProvider.class)
+@Command(name = "java -jar starbot-forwarder.jar", versionProvider = VersionProvider.class,
+        description = "Starbot Forwarder - a simple Discord bot to forward audio from a voice channel.",
+        footer = "If you have any issues, please head to the github page for the project: https://github.com/standrewsradio/starbot-forwarder")
 public class Arguments {
     @Option(names = {"-h", "--help"}, usageHelp = true, description = "Displays this help message.")
     private boolean helpRequested;
@@ -27,10 +29,6 @@ public class Arguments {
     @Option(names = {"-c", "--channel-id"}, required = true, description = "The channel ID for the voice channel to" +
             " forward from.")
     long channelId;
-
-    @Option(names = {"-s", "--single-channel"}, description = "If ffmpeg should process everything as a single" +
-            " audio channel.")
-    boolean singleChannel;
 
     @Option(names = {"-r", "--sample-rate"}, description = "The sample rate to use for the output.  " +
             "Default value: ${DEFAULT-VALUE}.")
