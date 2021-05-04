@@ -43,10 +43,6 @@ public class Arguments {
     @Option(names = {"-d", "--redirect-ffmpeg-output"}, description = "If ffmpeg's stdout should be printed.")
     boolean redirectFfmpegOutput;
 
-    @Option(names = {"-b", "--buffer-duration"}, description = "The duration of the internal audio packet buffer. " +
-            "Default value: ${DEFAULT-VALUE}.")
-    int bufferDuration = 400;
-
     @Option(names = {"-l", "--listening-to"}, description = "The activity string following \"Listening to \". " +
             "Default value: ${DEFAULT-VALUE}.")
     String listeningTo = "you.";

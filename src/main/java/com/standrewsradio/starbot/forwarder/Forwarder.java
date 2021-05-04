@@ -1,28 +1,26 @@
 package com.standrewsradio.starbot.forwarder;
 
 import ch.qos.logback.classic.Logger;
-import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
-import net.dv8tion.jda.api.utils.ChunkingFilter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
-import java.util.EnumSet;
 
 /**
  * The main class for the forwarder bot.
  */
 public class Forwarder {
-    private final Arguments arguments;
-    private final JDA discord;
-
     private final static Logger logger = (Logger) LoggerFactory.getLogger(Forwarder.class);
+
+    private final JDA discord;
 
     /**
      * Creates a new instance of the forwarder.
@@ -30,14 +28,12 @@ public class Forwarder {
      */
     public Forwarder(Arguments arguments) throws LoginException, InterruptedException, IOException {
         // setup variables
-        this.arguments = arguments;
-        this.discord = new JDABuilder()
-                .setToken(arguments.token)
-                .setDisabledCacheFlags(EnumSet.of(CacheFlag.EMOTE, CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS))
-                .setChunkingFilter(ChunkingFilter.NONE)
-                .setGuildSubscriptionsEnabled(false)
+        this.discord = JDABuilder.createLight(arguments.token)
+                .enableCache(CacheFlag.VOICE_STATE)
+                .setMemberCachePolicy(MemberCachePolicy.VOICE)
+                .disableIntents(GatewayIntent.GUILD_BANS, GatewayIntent.GUILD_EMOJIS, GatewayIntent.GUILD_INVITES,
+                        GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.DIRECT_MESSAGE_REACTIONS)
                 .setActivity(Activity.listening(arguments.listeningTo))
-                .setAudioSendFactory(new NativeAudioSendFactory(arguments.bufferDuration))
                 .build();
 
         // wait until we're ready
